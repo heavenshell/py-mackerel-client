@@ -16,6 +16,7 @@ import requests
 import simplejson as json
 import mackerel.host import Host
 
+
 class MackerelClientError(Exception):
     pass
 
@@ -36,7 +37,14 @@ class Client(object):
         return Host(data['host'])
 
     def update_host_status(self, host_id, status):
-        pass
+        if not status in ['standby', 'working', 'maintenance', 'poweroff']:
+            raise MackerelClientError('no such status: {0}'.format(status))
+
+        uri = '{0}/api/v0/hosts/{1}/status'.format(self.origin, host_id)
+        headers = {'Content-Type': 'application/json'}
+        data = self._request(uri, headers=headers)
+
+        return data
 
     def retire_host(self, host_id):
         pass
