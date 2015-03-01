@@ -54,22 +54,48 @@ class Client(object):
         return data
 
     def post_metrics(self, metrics):
-        pass
+        uri = '/api/v0/tsdb'
+        headers = {'Content-Type': 'application/json'}
+        data = self._request(uri, headers)
+
+        return data
 
     def get_latest_metrics(self, host_ids, names):
         pass
 
     def post_service_metrics(self, service_name, metrics):
-        pass
+        uri = '/api/v0/services/{0}/tsdb'.format(service_name)
+        headers = {'Content-Type': 'application/json'}
+        params = json.loads(metrics)
+        data = self._request(uri, method='POST', headers=headers, params=params)
 
-    def get_hosts(self, opts=None):
-        pass
+        return data
 
-    def _request(self, uri, headers=None, params=None):
+    def get_hosts(self, **kwargs):
+        uri = '/api/v0/hosts.json'
+        params = {}
+        if kwargs.get('service', None):
+            params['service'] = kwargs.get('service')
+
+        if kwargs.get('roles', None):
+            params['roles'] = kwargs.get('roles')
+
+        if kwargs.get('name', None):
+            params['name'] = kwargs.get('name')
+
+        data = self._request(uri, params=params)
+
+    def _request(self, uri, method='GET', headers=None, params=None):
         if headers is not None:
             headers.update({'X-Api-Key': self.api_key})
 
-        res = requests.get(uri, headers=headers, params=params)
+        if method == 'GET':
+            res = requests.get(uri, headers=headers, params=params)
+        elif method == 'POST':
+            res = requests.get(uri, headers=headers, data=params)
+        else:
+            message = '{0} is not supported.'.format(method)
+            raise NotImplementedError(message=message)
 
         if res.status_code != '200':
             message = 'GET {0} failed: {1}'.format(uri, res.status_code)
