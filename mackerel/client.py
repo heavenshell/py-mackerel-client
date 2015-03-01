@@ -47,7 +47,11 @@ class Client(object):
         return data
 
     def retire_host(self, host_id):
-        pass
+        uri =  'api/v0/hosts/{0}/retire'.format(host_id)
+        headers = {'Content-Type': 'application/json'}
+        data = self._request(uri, headers)
+
+        return data
 
     def post_metrics(self, metrics):
         pass
