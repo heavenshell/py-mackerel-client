@@ -20,16 +20,16 @@ class Host(object):
 
     def __init__(self, **kwargs):
         self.args = kwargs
-        self.name = kwargs.get('name')
-        self.meta = kwargs.get('meta')
-        self.type = kwargs.get('type')
-        self.status = kwargs.get('status')
-        self.memo = kwargs.get('memo')
-        self.is_retired = kwargs.get('isRetired')
-        self.id = kwargs.get('id')
-        self.created_at = kwargs.get('createdAt')
-        self.roles = kwargs.get('roles')
-        self.interfaces = kwargs.get('interfaces')
+        self.name = kwargs.get('name', None)
+        self.meta = kwargs.get('meta', None)
+        self.type = kwargs.get('type', None)
+        self.status = kwargs.get('status', None)
+        self.memo = kwargs.get('memo', None)
+        self.is_retired = kwargs.get('isRetired', None)
+        self.id = kwargs.get('id', None)
+        self.created_at = kwargs.get('createdAt', None)
+        self.roles = kwargs.get('roles', None)
+        self.interfaces = kwargs.get('interfaces', None)
 
     def ip_addr(self):
         pass
