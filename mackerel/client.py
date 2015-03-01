@@ -14,7 +14,7 @@
 """
 import requests
 import simplejson as json
-import mackerel.host import Host
+from mackerel.host import Host
 
 
 class MackerelClientError(Exception):
