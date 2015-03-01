@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-    mackerel.client
-    ~~~~~~~~~~~~~~~
+    mackerel.host
+    ~~~~~~~~~~~~~
 
-    Mackerel
+    Mackerel client implemented by Pyton.
 
+    Ported from `mackerel-client-ruby`.
+    <https://github.com/mackerelio/mackerel-client-ruby>
 
+    :copyright: (c) 2014 Hatena, All rights reserved.
     :copyright: (c) 2015 Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
