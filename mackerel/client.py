@@ -74,6 +74,12 @@ class Client(object):
         return data
 
     def get_hosts(self, **kwargs):
+        """Get hosts.
+
+        :param service: Service name
+        :param roles: Service role
+        :param name: Host name
+        """
         uri = '/api/v0/hosts.json'
         params = {}
         if kwargs.get('service', None):
