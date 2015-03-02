@@ -42,9 +42,10 @@ class Client(object):
         if not status in ['standby', 'working', 'maintenance', 'poweroff']:
             raise MackerelClientError('no such status: {0}'.format(status))
 
-        uri = '/api/v0/hosts/{0}/status'.format(self.origin, host_id)
+        uri = '/api/v0/hosts/{0}/status'.format(host_id)
         headers = {'Content-Type': 'application/json'}
-        data = self._request(uri, headers=headers)
+        params = json.dumps({'status': status})
+        data = self._request(uri, method='POST', headers=headers, params=params)
 
         return data
 
@@ -104,7 +105,7 @@ class Client(object):
         if method == 'GET':
             res = requests.get(uri, headers=headers, params=params)
         elif method == 'POST':
-            res = requests.get(uri, headers=headers, data=params)
+            res = requests.post(uri, headers=headers, data=params)
         else:
             message = '{0} is not supported.'.format(method)
             raise NotImplementedError(message=message)
