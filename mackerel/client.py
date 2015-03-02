@@ -26,9 +26,11 @@ class Client(object):
 
     def __init__(self, **kwargs):
         self.origin = kwargs.get('mackerel_origin', 'https://mackerel.io')
-        api_key = kwargs('mackerel_api_key', None)
+        api_key = kwargs.get('mackerel_api_key', None)
         if api_key is None:
             raise MackerelClientError(self.ERROR_MESSAGE_FOR_API_KEY_ABSENCE)
+
+        self.api_key = api_key
 
     def get_host(self, host_id):
         uri = '{0}/api/v0/hosts/{1}'.format(self.origin, host_id)
