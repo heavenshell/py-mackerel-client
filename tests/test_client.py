@@ -64,3 +64,8 @@ class TestClient(TestCase):
         """ Client().update_host_status('foo') should raise error. """
         with self.assertRaises(MackerelClientError):
             self.client.update_host_status('2k48zsCx8ij', 'foo')
+
+    def test_should_retire(self):
+        """ Client().retire_host() should return success. """
+        ret = self.client.retire_host('2k48zsCx8ij')
+        self.assertEqual(ret['success'], True)

@@ -52,7 +52,7 @@ class Client(object):
     def retire_host(self, host_id):
         uri =  '/api/v0/hosts/{0}/retire'.format(host_id)
         headers = {'Content-Type': 'application/json'}
-        data = self._request(uri, headers)
+        data = self._request(uri, method='POST', headers=headers)
 
         return data
 
@@ -108,7 +108,7 @@ class Client(object):
             res = requests.post(uri, headers=headers, data=params)
         else:
             message = '{0} is not supported.'.format(method)
-            raise NotImplementedError(message=message)
+            raise NotImplementedError(message)
 
         if res.status_code != 200:
             message = 'GET {0} failed: {1}'.format(uri, res.status_code)
