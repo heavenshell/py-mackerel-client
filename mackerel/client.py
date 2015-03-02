@@ -91,7 +91,8 @@ class Client(object):
         if kwargs.get('name', None):
             params['name'] = kwargs.get('name')
 
-        data = self._request(uri, params=params)
+        hosts = self._request(uri, params=params)
+        return [Host(**host) for host in hosts['hosts']]
 
     def _request(self, uri, method='GET', headers=None, params=None):
         uri = '{0}{1}'.format(self.origin, uri)
@@ -108,10 +109,10 @@ class Client(object):
             message = '{0} is not supported.'.format(method)
             raise NotImplementedError(message=message)
 
-        if res.status_code != '200':
+        if res.status_code != 200:
             message = 'GET {0} failed: {1}'.format(uri, res.status_code)
             raise MackerelClientError(message)
 
-        data = json.dumps(res.content)
+        data = json.loads(res.content)
 
         return data
