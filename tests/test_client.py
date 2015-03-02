@@ -26,3 +26,8 @@ class TestClient(TestCase):
         hosts = self.client.get_hosts()
         for host in hosts:
             self.assertTrue(isinstance(host, Host))
+
+    def test_should_get_host(self):
+        """ Client().get_hosts() should get host. """
+        host = self.client.get_host('xxxxxxxxxxx')
+        self.assertTrue(isinstance(host, Host))

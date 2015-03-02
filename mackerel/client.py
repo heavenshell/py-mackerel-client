@@ -33,10 +33,10 @@ class Client(object):
         self.api_key = api_key
 
     def get_host(self, host_id):
-        uri = '/api/v0/hosts/{0}'.format(self.origin, host_id)
+        uri = '/api/v0/hosts/{0}'.format(host_id)
         data = self._request(uri)
 
-        return Host(data['host'])
+        return Host(**data['host'])
 
     def update_host_status(self, host_id, status):
         if not status in ['standby', 'working', 'maintenance', 'poweroff']:
