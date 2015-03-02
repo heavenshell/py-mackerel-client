@@ -37,3 +37,11 @@ class Host(object):
     def mac_addr(self):
         pass
 
+    def __repr__(self):
+        repr = '<Host('
+        repr += 'name={0}, meta={1}, type={2}, status={3}, memo={4},'
+        repr += 'is_retired={5}, id={6}, created_at={7}, roles={8},'
+        repr += 'interfaces={9})'
+        return repr.format(self.name, self.meta, self.type, self.status,
+                           self.memo, self.is_retired, self.id, 
+                           self.created_at, self.roles, self.interfaces)
