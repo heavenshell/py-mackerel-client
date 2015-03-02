@@ -33,7 +33,7 @@ class Client(object):
         self.api_key = api_key
 
     def get_host(self, host_id):
-        uri = '{0}/api/v0/hosts/{1}'.format(self.origin, host_id)
+        uri = '/api/v0/hosts/{0}'.format(self.origin, host_id)
         data = self._request(uri)
 
         return Host(data['host'])
@@ -42,14 +42,14 @@ class Client(object):
         if not status in ['standby', 'working', 'maintenance', 'poweroff']:
             raise MackerelClientError('no such status: {0}'.format(status))
 
-        uri = '{0}/api/v0/hosts/{1}/status'.format(self.origin, host_id)
+        uri = '/api/v0/hosts/{0}/status'.format(self.origin, host_id)
         headers = {'Content-Type': 'application/json'}
         data = self._request(uri, headers=headers)
 
         return data
 
     def retire_host(self, host_id):
-        uri =  'api/v0/hosts/{0}/retire'.format(host_id)
+        uri =  '/api/v0/hosts/{0}/retire'.format(host_id)
         headers = {'Content-Type': 'application/json'}
         data = self._request(uri, headers)
 
@@ -88,7 +88,10 @@ class Client(object):
         data = self._request(uri, params=params)
 
     def _request(self, uri, method='GET', headers=None, params=None):
-        if headers is not None:
+        uri = '{0}{1}'.format(self.origin, uri)
+        if headers is None:
+            headers = {'X-Api-Key': self.api_key}
+        else:
             headers.update({'X-Api-Key': self.api_key})
 
         if method == 'GET':
