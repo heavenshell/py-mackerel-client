@@ -64,7 +64,13 @@ class Client(object):
         return data
 
     def get_latest_metrics(self, host_ids, names):
-        pass
+        hosts_query = '&'.join(['hostId={0}'.format(id) for id in host_ids])
+        names_query = '&'.join(['name={0}'.format(name) for name in names])
+        uri = '/api/v0/tsdb/latest?{0}&{1}'.format(hosts_query,  names_query)
+
+        data = self._request(uri)
+
+        return data
 
     def post_service_metrics(self, service_name, metrics):
         uri = '/api/v0/services/{0}/tsdb'.format(service_name)
