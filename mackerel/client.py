@@ -3,7 +3,7 @@
     mackerel.client
     ~~~~~~~~~~~~~~~
 
-    Mackerel client implemented by Pyton.
+    Mackerel client implemented by Python.
 
     Ported from `mackerel-client-ruby`.
     <https://github.com/mackerelio/mackerel-client-ruby>
