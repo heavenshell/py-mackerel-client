@@ -25,6 +25,11 @@ class Client(object):
     ERROR_MESSAGE_FOR_API_KEY_ABSENCE = 'API key is absent. Set your API key in a environment variable called MACKEREL_APIKEY.'
 
     def __init__(self, **kwargs):
+        """Construct a Mackerel client.
+
+        :param mackerel_origin: API endpoint
+        :param mackerel_api_key: API key
+        """
         self.origin = kwargs.get('mackerel_origin', 'https://mackerel.io')
         api_key = kwargs.get('mackerel_api_key', None)
         if api_key is None:
@@ -33,12 +38,21 @@ class Client(object):
         self.api_key = api_key
 
     def get_host(self, host_id):
+        """Get registered host.
+
+        :param host_id: Host id
+        """
         uri = '/api/v0/hosts/{0}'.format(host_id)
         data = self._request(uri)
 
         return Host(**data['host'])
 
     def update_host_status(self, host_id, status):
+        """Update host status.
+
+        :param host_id: Host id
+        :param status: `standby`, `working`, `maintenance` or `poweroff`
+        """
         if not status in ['standby', 'working', 'maintenance', 'poweroff']:
             raise MackerelClientError('no such status: {0}'.format(status))
 
@@ -50,6 +64,10 @@ class Client(object):
         return data
 
     def retire_host(self, host_id):
+        """Retire host.
+
+        :param host_id: Host id
+        """
         uri =  '/api/v0/hosts/{0}/retire'.format(host_id)
         headers = {'Content-Type': 'application/json'}
         data = self._request(uri, method='POST', headers=headers)
@@ -57,13 +75,23 @@ class Client(object):
         return data
 
     def post_metrics(self, metrics):
+        """Post metrics.
+
+        :param metrics: Metrics
+        """
         uri = '/api/v0/tsdb'
         headers = {'Content-Type': 'application/json'}
-        data = self._request(uri, headers)
+        params = json.dumps(metrics)
+        data = self._request(uri, method='POST', headers=headers, params=params)
 
         return data
 
     def get_latest_metrics(self, host_ids, names):
+        """Get latest metrics.
+
+        :param host_ids: Host id list
+        :param names: Metrics list
+        """
         hosts_query = '&'.join(['hostId={0}'.format(id) for id in host_ids])
         names_query = '&'.join(['name={0}'.format(name) for name in names])
         uri = '/api/v0/tsdb/latest?{0}&{1}'.format(hosts_query,  names_query)
@@ -73,9 +101,14 @@ class Client(object):
         return data
 
     def post_service_metrics(self, service_name, metrics):
+        """Post service metrics.
+
+        :param service_name: Registered service name
+        :param metrics: Metrics list
+        """
         uri = '/api/v0/services/{0}/tsdb'.format(service_name)
         headers = {'Content-Type': 'application/json'}
-        params = json.loads(metrics)
+        params = json.dumps(metrics)
         data = self._request(uri, method='POST', headers=headers, params=params)
 
         return data
@@ -102,6 +135,13 @@ class Client(object):
         return [Host(**host) for host in hosts['hosts']]
 
     def _request(self, uri, method='GET', headers=None, params=None):
+        """Request to mackerel.
+
+        :param uri: Request uri
+        :param method: HTTP Method
+        :param headers: HTTP Headers
+        :param params: HTTP Body or params
+        """
         uri = '{0}{1}'.format(self.origin, uri)
         if headers is None:
             headers = {'X-Api-Key': self.api_key}
