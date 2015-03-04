@@ -1,5 +1,5 @@
 mackerel.client
 ===============
-Mackerel client implemented by Pyton.
+Mackerel client implemented by Python.
 
 This client is a WIP.

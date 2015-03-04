@@ -76,3 +76,50 @@ class TestClient(TestCase):
                                              ['loadavg5', 'memory.free'])
         for k in ['loadavg5', 'memory.free']:
             self.assertTrue(k in ret['tsdbLatest']['2k64NJ5Ncrs'].keys())
+
+    def test_should_post_metrics(self):
+        """ Client().post_metrics() should return success. """
+        id = '2k64NJ5Ncrs'
+        metrics = [
+            {
+                'hostId': id, 'name': 'custom.metrics.loadavg',
+                'time': 1401537844, 'value': 1.4
+            },
+            {
+                'hostId': id, 'name': 'custom.metrics.uptime',
+                'time': 1401537844, 'value' : 500
+            }
+
+        ]
+        ret = self.client.post_metrics(metrics)
+        self.assertEqual(ret['success'], True)
+
+    def test_should_post_service_metrics(self):
+        """ Client().post_service_metrics() should return success. """
+        metrics = [
+            {
+                'name': 'custom.metrics.latency',
+                'time': 1401537844, 'value': 0.5
+            },
+            {
+                'name': 'custom.metrics.uptime',
+                'time': 1401537844, 'value': 500
+            }
+        ]
+        ret = self.client.post_service_metrics('service_name', metrics)
+        self.assertEqual(ret['success'], True)
+
+    def test_should_raise_error_when_service_not_found(self):
+        """ Client().post_service_metrics() should raise error when service name not found. """
+        metrics = [
+            {
+                'name': 'custom.metrics.latency',
+                'time': 1401537844, 'value': 0.5
+            },
+            {
+                'name': 'custom.metrics.uptime',
+                'time': 1401537844, 'value': 500
+            }
+        ]
+        with self.assertRaises(MackerelClientError):
+            self.client.post_service_metrics('foobarbaz', metrics)
