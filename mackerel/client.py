@@ -53,7 +53,7 @@ class Client(object):
         :param host_id: Host id
         :param status: `standby`, `working`, `maintenance` or `poweroff`
         """
-        if not status in ['standby', 'working', 'maintenance', 'poweroff']:
+        if status not in ['standby', 'working', 'maintenance', 'poweroff']:
             raise MackerelClientError('no such status: {0}'.format(status))
 
         uri = '/api/v0/hosts/{0}/status'.format(host_id)
@@ -94,7 +94,7 @@ class Client(object):
         """
         hosts_query = '&'.join(['hostId={0}'.format(id) for id in host_ids])
         names_query = '&'.join(['name={0}'.format(name) for name in names])
-        uri = '/api/v0/tsdb/latest?{0}&{1}'.format(hosts_query,  names_query)
+        uri = '/api/v0/tsdb/latest?{0}&{1}'.format(hosts_query, names_query)
 
         data = self._request(uri)
 

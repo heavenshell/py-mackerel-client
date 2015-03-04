@@ -87,7 +87,7 @@ class TestClient(TestCase):
             },
             {
                 'hostId': id, 'name': 'custom.metrics.uptime',
-                'time': 1401537844, 'value' : 500
+                'time': 1401537844, 'value': 500
             }
 
         ]

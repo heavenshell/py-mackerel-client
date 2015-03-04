@@ -43,5 +43,5 @@ class Host(object):
         repr += 'is_retired={5}, id={6}, created_at={7}, roles={8},'
         repr += 'interfaces={9})'
         return repr.format(self.name, self.meta, self.type, self.status,
-                           self.memo, self.is_retired, self.id, 
+                           self.memo, self.is_retired, self.id,
                            self.created_at, self.roles, self.interfaces)
