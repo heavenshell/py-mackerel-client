@@ -117,7 +117,7 @@ class Client(object):
             raise NotImplementedError(message)
 
         if res.status_code != 200:
-            message = 'GET {0} failed: {1}'.format(uri, res.status_code)
+            message = '{0} {1} failed: {2}'.format(method, uri, res.status_code)
             raise MackerelClientError(message)
 
         data = json.loads(res.content)
