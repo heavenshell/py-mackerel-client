@@ -10,9 +10,22 @@
     :license: BSD, see LICENSE for more details.
 """
 import os
+import requests
 from unittest import TestCase
+from mock import patch
 from mackerel.client import Client, MackerelClientError
 from mackerel.host import Host
+
+
+def dummy_response(m, filename):
+    response = requests.Response()
+    response.status_code = 200
+    root_path = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(root_path, filename)
+    with open(file_path, 'r') as f:
+        data = f.read()
+        response._content = data
+        m.return_value = response
 
 
 class TestClient(TestCase):
@@ -27,13 +40,17 @@ class TestClient(TestCase):
         for host in hosts:
             self.assertTrue(isinstance(host, Host))
 
-    def test_should_get_host(self):
+    @patch('mackerel.client.requests.get')
+    def test_should_get_host(self, m):
         """ Client().get_hosts() should get host. """
+        dummy_response(m, 'fixtures/get_host.json')
         host = self.client.get_host('2k64NJ5Ncrs')
         self.assertTrue(isinstance(host, Host))
 
-    def test_should_update_host_poweroff(self):
+    #@patch('mackerel.client.requests.post')
+    def test_should_update_host_poweroff(self):#, m):
         """ Client().update_host_status('poweroff') should return success. """
+        #dummy_response(m, 'fixtures/success.json')
         ret = self.client.update_host_status('2k48zsCx8ij', 'poweroff')
         self.assertEqual(ret['success'], True)
         host = self.client.get_host('2k64NJ5Ncrs')
