@@ -43,6 +43,6 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python'
     ],
-    tests_require=['requests', 'simplejson'],
+    tests_require=['requests', 'simplejson', 'mock'],
     test_suite='tests'
 )
