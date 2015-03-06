@@ -102,7 +102,7 @@ class TestClient(TestCase):
     def test_should_retire(self, m):
         """ Client().retire_host() should return success. """
         dummy_response(m, 'fixtures/success.json')
-        ret = self.client.retire_host('2k48zsCx8ij')
+        ret = self.client.retire_host(self.id)
         self.assertEqual(ret['success'], True)
 
     @patch('mackerel.client.requests.get')
