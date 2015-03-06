@@ -68,7 +68,7 @@ class Client(object):
 
         :param host_id: Host id
         """
-        uri =  '/api/v0/hosts/{0}/retire'.format(host_id)
+        uri = '/api/v0/hosts/{0}/retire'.format(host_id)
         headers = {'Content-Type': 'application/json'}
         data = self._request(uri, method='POST', headers=headers)
 
