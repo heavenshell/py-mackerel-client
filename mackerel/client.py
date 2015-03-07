@@ -12,6 +12,7 @@
     :copyright: (c) 2015 Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
+import logging
 import requests
 import simplejson as json
 from mackerel.host import Host
@@ -22,9 +23,15 @@ class MackerelClientError(Exception):
 
 
 class Client(object):
-    ERROR_MESSAGE_FOR_API_KEY_ABSENCE = 'API key is absent. Set your API key in a environment variable called MACKEREL_APIKEY.'
 
-    def __init__(self, **kwargs):
+    #: Mackerel apikey error message.
+    ERROR_MESSAGE_FOR_API_KEY_ABSENCE = 'API key is absent. Set your API key in a environment variable called MACKEREL_APIKEY.'
+    #: Log format.
+    debug_log_format = (
+        '[%(asctime)s %(levelname)s][%(pathname)s:%(lineno)d]: %(message)s'
+    )
+
+    def __init__(self, logger=None, **kwargs):
         """Construct a Mackerel client.
 
         :param mackerel_origin: API endpoint
@@ -36,6 +43,12 @@ class Client(object):
             raise MackerelClientError(self.ERROR_MESSAGE_FOR_API_KEY_ABSENCE)
 
         self.api_key = api_key
+        if logger is None:
+            logging.basicConfig(level=logging.INFO,
+                                format=self.debug_log_format)
+            self.logger = logging.getLogger('mackerel.client')
+        else:
+            self.logger = logger
 
     def get_host(self, host_id):
         """Get registered host.
@@ -148,6 +161,7 @@ class Client(object):
         else:
             headers.update({'X-Api-Key': self.api_key})
 
+        self.logger.debug('{0} {1} {2}'.format(method, uri, params))
         if method == 'GET':
             res = requests.get(uri, headers=headers, params=params)
         elif method == 'POST':
@@ -156,6 +170,8 @@ class Client(object):
             message = '{0} is not supported.'.format(method)
             raise NotImplementedError(message)
 
+        self.logger.debug('Response from {0} is {1}'.format(self.origin,
+                                                            res.status_code))
         if res.status_code != 200:
             message = '{0} {1} failed: {2}'.format(method, uri, res.status_code)
             raise MackerelClientError(message)
