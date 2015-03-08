@@ -31,7 +31,7 @@ def dummy_response(m, filename, status_code=200):
 class TestClient(TestCase):
     @classmethod
     def setUpClass(cls):
-        api_key = os.environ.get('MACKEREL_API_KEY')
+        api_key = os.environ.get('MACKEREL_APIKEY')
         cls.client = Client(mackerel_api_key=api_key)
         cls.id = 'xxxxxxxxxxx'
 
