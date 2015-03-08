@@ -12,7 +12,7 @@
 import os
 from setuptools import setup, find_packages
 
-requires = ['requests', 'simplejson']
+requires = ['requests', 'simplejson', 'click']
 
 app_name = 'mackerel.client'
 
@@ -43,6 +43,10 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python'
     ],
+    entry_points="""
+    [console_scripts]
+    mkr.py = mackerel.runner:main
+    """,
     tests_require=['requests', 'simplejson', 'mock'],
     test_suite='tests'
 )
