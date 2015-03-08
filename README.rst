@@ -112,3 +112,38 @@ Post service metrics
   # Post 'custom.metrics.latency' and 'custom.metrics.uptime' to `service_name`.
   self.client.post_service_metrics('service_name', metrics)
 
+
+CLI
+---
+
+Get host(s) information from hostname or service, role.
+
+.. code:: shell
+
+  $ mkr.py info [--name foo] [--service service] [--role role]
+
+Set status of a host.
+
+.. code:: shell
+
+  $ mkr.py status --host-id foo --status working
+
+Retire a host.
+
+.. code:: shell
+
+  $ mkr.py retire --host-id foo
+
+Get status of a host.
+
+.. code:: shell
+
+  $ mkr.py status --host-id foo
+
+Authentication
+--------------
+
+.. code:: shell
+
+  $ export MACKEREL_APIKEY=foobar
+
