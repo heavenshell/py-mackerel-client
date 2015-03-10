@@ -4,6 +4,11 @@ mackerel.client is a python library to access Mackerel (https://mackerel.io/).
 
 This client is Ported from `mackerel-client-ruby <https://github.com/mackerelio/mackerel-client-ruby>`_.
 
+Dependency
+----------
+
+mackerel.client use `requests <http://docs.python-requests.org/en/latest/>`_, `simplejson <https://github.com/simplejson/simplejson>`_ and `click <http://click.pocoo.org/3/>`_.
+
 Usage
 -----
 Get hosts
