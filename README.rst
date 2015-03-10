@@ -4,6 +4,14 @@ mackerel.client is a python library to access Mackerel (https://mackerel.io/).
 
 This client is Ported from `mackerel-client-ruby <https://github.com/mackerelio/mackerel-client-ruby>`_.
 
+Install
+-------
+
+.. code:: shell
+
+  $ pip install mackerel.client
+
+
 Dependency
 ----------
 
