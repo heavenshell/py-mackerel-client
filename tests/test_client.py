@@ -35,8 +35,10 @@ class TestClient(TestCase):
         cls.client = Client(mackerel_api_key=api_key)
         cls.id = 'xxxxxxxxxxx'
 
-    def test_should_get_hosts(self):
+    @patch('mackerel.client.requests.get')
+    def test_should_get_hosts(self, m):
         """ Client().get_hosts() should get host list. """
+        dummy_response(m, 'fixtures/get_hosts.json')
         hosts = self.client.get_hosts()
         for host in hosts:
             self.assertTrue(isinstance(host, Host))
