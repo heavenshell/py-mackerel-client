@@ -1,5 +1,8 @@
 mackerel.client
 ===============
+.. image:: https://travis-ci.org/heavenshell/py-mackerel-client.svg?branch=master
+    :target: https://travis-ci.org/heavenshell/py-mackerel-client
+
 mackerel.client is a python library to access Mackerel (https://mackerel.io/).
 
 This client is Ported from `mackerel-client-ruby <https://github.com/mackerelio/mackerel-client-ruby>`_.
