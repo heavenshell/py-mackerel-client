@@ -168,3 +168,18 @@ class TestClient(TestCase):
         ]
         with self.assertRaises(MackerelClientError):
             self.client.post_service_metrics('foobarbaz', metrics)
+
+
+class TestHost(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        api_key = os.environ.get('MACKEREL_APIKEY')
+        cls.client = Client(mackerel_api_key=api_key)
+        cls.id = 'xxxxxxxxxxx'
+
+    @patch('mackerel.client.requests.get')
+    def test_should_get_ipaddress(self, m):
+        """ Host().ipa_ddr() should get ipaddress. """
+        dummy_response(m, 'fixtures/get_host.json')
+        host = self.client.get_host(self.id)
+        self.assertEqual(host.ip_addr(), '10.0.2.15')

@@ -32,7 +32,9 @@ class Host(object):
         self.interfaces = kwargs.get('interfaces', None)
 
     def ip_addr(self):
-        pass
+        for i in self.interfaces:
+            if self.MACKEREL_INTERFACE_NAME_PATTERN.search(i['name']):
+                return i['ipAddress']
 
     def mac_addr(self):
         pass
