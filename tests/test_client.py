@@ -179,7 +179,14 @@ class TestHost(TestCase):
 
     @patch('mackerel.client.requests.get')
     def test_should_get_ipaddress(self, m):
-        """ Host().ipa_ddr() should get ipaddress. """
+        """ Host().ip_addr() should get ipaddress. """
         dummy_response(m, 'fixtures/get_host.json')
         host = self.client.get_host(self.id)
         self.assertEqual(host.ip_addr(), '10.0.2.15')
+
+    @patch('mackerel.client.requests.get')
+    def test_should_get_macaddress(self, m):
+        """ Host().mac_addr() should get ipaddress. """
+        dummy_response(m, 'fixtures/get_host.json')
+        host = self.client.get_host(self.id)
+        self.assertEqual(host.mac_addr(), '08:00:27:96:ed:36')
