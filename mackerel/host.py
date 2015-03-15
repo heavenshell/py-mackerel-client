@@ -3,7 +3,7 @@
     mackerel.host
     ~~~~~~~~~~~~~
 
-    Mackerel client implemented by Pyton.
+    Mackerel client implemented by Python.
 
     Ported from `mackerel-client-ruby`.
     <https://github.com/mackerelio/mackerel-client-ruby>
@@ -19,6 +19,19 @@ class Host(object):
     MACKEREL_INTERFACE_NAME_PATTERN = re.compile(r'^eth\d')
 
     def __init__(self, **kwargs):
+        """Construct a host.
+
+        :param name: Host name
+        :param meta: Host metadata
+        :param type: Host type
+        :param status: Host status
+        :param memo: Host memo
+        :param is_retired: Retired flag
+        :param id: Host id
+        :param created_at: Created datetime
+        :param roles: Host roles
+        :param interfaces: Host interfaces
+        """
         self.args = kwargs
         self.name = kwargs.get('name', None)
         self.meta = kwargs.get('meta', None)
@@ -32,11 +45,13 @@ class Host(object):
         self.interfaces = kwargs.get('interfaces', None)
 
     def ip_addr(self):
+        """Get ipaddress."""
         for i in self.interfaces:
             if self.MACKEREL_INTERFACE_NAME_PATTERN.search(i['name']):
                 return i['ipAddress']
 
     def mac_addr(self):
+        """Get MAC address."""
         for i in self.interfaces:
             if self.MACKEREL_INTERFACE_NAME_PATTERN.search(i['name']):
                 return i['macAddress']
