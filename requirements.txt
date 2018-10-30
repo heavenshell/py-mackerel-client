@@ -1,4 +1,4 @@
 requests==2.20.0
-click==6.7
+click==7.0
 simplejson==3.13.2
 mock==2.0.0
