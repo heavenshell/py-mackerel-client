@@ -130,7 +130,7 @@ class Client(object):
         """Get hosts.
 
         :param service: Service name
-        :param roles: Service role
+        :param role: Service role
         :param name: Host name
         """
         uri = '/api/v0/hosts.json'
@@ -138,8 +138,8 @@ class Client(object):
         if kwargs.get('service', None):
             params['service'] = kwargs.get('service')
 
-        if kwargs.get('roles', None):
-            params['roles'] = kwargs.get('roles')
+        if kwargs.get('role', None):
+            params['role'] = kwargs.get('role')
 
         if kwargs.get('name', None):
             params['name'] = kwargs.get('name')
