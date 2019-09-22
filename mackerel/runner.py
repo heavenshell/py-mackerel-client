@@ -12,8 +12,9 @@
     :copyright: (c) 2015 Shinya Ohyanagi, All rights reserved.
     :license: BSD, see LICENSE for more details.
 """
-import os
 import logging
+import os
+
 import click
 from mackerel.client import Client
 
