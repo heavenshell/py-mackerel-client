@@ -13,6 +13,7 @@
     :license: BSD, see LICENSE for more details.
 """
 import logging
+
 import requests
 import simplejson as json
 from mackerel.host import Host
@@ -25,7 +26,7 @@ class MackerelClientError(Exception):
 class Client(object):
 
     #: Mackerel apikey error message.
-    ERROR_MESSAGE_FOR_API_KEY_ABSENCE = 'API key is absent. Set your API key in a environment variable called MACKEREL_APIKEY.'
+    ERROR_MESSAGE_FOR_API_KEY_ABSENCE = 'API key is absent. Set your API key in a environment variable called MACKEREL_APIKEY.' # noqa E501
     #: Log format.
     debug_log_format = (
         '[%(asctime)s %(levelname)s][%(pathname)s:%(lineno)d]: %(message)s'
@@ -44,8 +45,7 @@ class Client(object):
 
         self.api_key = api_key
         if logger is None:
-            logging.basicConfig(level=logging.INFO,
-                                format=self.debug_log_format)
+            logging.basicConfig(level=logging.INFO, format=self.debug_log_format)
             self.logger = logging.getLogger('mackerel.client')
         else:
             self.logger = logger
@@ -176,8 +176,9 @@ class Client(object):
             message = '{0} is not supported.'.format(method)
             raise NotImplementedError(message)
 
-        self.logger.debug('Response from {0} is {1}'.format(self.origin,
-                                                            res.status_code))
+        self.logger.debug(
+            'Response from {0} is {1}'.format(self.origin, res.status_code),
+        )
         if res.status_code != 200:
             message = '{0} {1} failed: {2}'.format(method, uri, res.status_code)
             raise MackerelClientError(message)

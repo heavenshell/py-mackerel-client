@@ -1,14 +1,24 @@
+dist: xenial
 language: python
+cache:
+  pip: true
+  directories:
+  - "$TRAVIS_BUILD_DIR/.tox"
 
 python:
   - 2.7
   - 3.6
   - 3.7
+  - 3.8
 
 env:
   global:
     MACKEREL_APIKEY='xxxxxxxx'
 
-before_install: pip install -r requirements.txt
+before_install:
+  - pip install -U -r requirements.txt
+before_script:
+  - flake8 --verbose --jobs=8
 
-script: python setup.py test
+script:
+  - python setup.py test
