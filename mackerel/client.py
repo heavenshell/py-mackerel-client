@@ -144,6 +144,12 @@ class Client(object):
         if kwargs.get('name', None):
             params['name'] = kwargs.get('name')
 
+        if kwargs.get('status', None):
+            params['status'] = kwargs.get('status')
+
+        if kwargs.get('customIdentifier', None):
+            params['customIdentifier'] = kwargs.get('customIdentifier')
+
         hosts = self._request(uri, params=params)
         return [Host(**host) for host in hosts['hosts']]
 
