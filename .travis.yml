@@ -6,9 +6,9 @@ cache:
   - "$TRAVIS_BUILD_DIR/.tox"
 
 python:
-  - 2.7
   - 3.6
   - 3.7
+  - 3.8
 
 env:
   global:
