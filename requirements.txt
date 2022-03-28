@@ -1,5 +1,5 @@
 requests==2.26.0
-click==8.0.1
+click==8.1.0
 simplejson==3.17.5
 mock==4.0.3
 flake8==3.9.2
